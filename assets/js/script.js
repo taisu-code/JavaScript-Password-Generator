@@ -99,28 +99,34 @@ var errorOptionalSelection = 'Please select at least one character type to conti
 var minPassLength = 10;
 var maxPasslength = 64;
 
-var userPrompt;
+var userPrompt
 var passLength;
+
+var lowercaseChar;
+var uppercaseChar;
+var numericChar;
+var specialChar;
+
+
 
 // Function to prompt user for password options
 function getPasswordOptions() {
 
   userPrompt = prompt(askPassLength);
   passLength = parseInt(userPrompt);
-if (userPrompt === null) {
-  return;
-} else if (passLength < minPassLength || passLength > maxPasslength) {
-  alert (errorLengthPassword);
-  passLength = prompt(askPassLength);
-}
 
-// password character option selection
+  while (passLength < minPassLength || passLength > maxPasslength) {
+    alert(errorLengthPassword);
+    passLength = prompt(askPassLength);
+  }
 
-  var lowercaseChar = confirm(askIfLowercaseNeeded);
-  var uppercaseChar = confirm(askIfUppercaseNeeded);
-  var numericChar = confirm(askIfNumbersNeeded);
-  var specialChar = confirm(askSpecialChar);
-  
+  // password character option selection
+
+  lowercaseChar = confirm(askIfLowercaseNeeded);
+  uppercaseChar = confirm(askIfUppercaseNeeded);
+  numericChar = confirm(askIfNumbersNeeded);
+  specialChar = confirm(askSpecialChar);
+
   // check is to ensure that the user input is a number.
   while (lowercaseChar === false && uppercaseChar === false && numericChar === false && specialChar === false) {
     alert(errorOptionalSelection);
@@ -134,27 +140,27 @@ if (userPrompt === null) {
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-   // get random index value
-   var randomValueIndex = Math.floor(Math.random() * arr.length);
-   // get random character
-   var character = arr[randomValueIndex];
-   return character;
+  // get random index value
+  var randomValueIndex = Math.floor(Math.random() * arr.length);
+  // get random character
+  var character = arr[randomValueIndex];
+  return character;
 }
 
 // Function to generate password with user input
 function generatePassword() {
   getPasswordOptions();
   var randomPassChars = [];
-  if (askIfLowercaseNeeded === true) {
+  if (lowercaseChar === true) {
     randomPassChars.push(lowerCasedCharacters);
   }
-  if (askIfUppercaseNeeded === true) {
+  if (uppercaseChar === true) {
     randomPassChars.push(upperCasedCharacters);
   }
-  if (askIfNumbersNeeded === true) {
+  if (numericChar === true) {
     randomPassChars.push(numericCharacters);
   }
-  if (askSpecialChar === true) {
+  if (specialChar === true) {
     randomPassChars.push(specialCharacters);
   }
   // add random characters to generated password
